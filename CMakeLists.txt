@@ -15,11 +15,11 @@ if(MSVC)
 endif()
 
 # Объявляем библиотеку
-add_library(polynom SHARED "include/polynom/polynom.h" "src/polynom.cpp")
+add_library(polynom SHARED "include/polynom/polynom.h" "src/polynom.cc")
 target_include_directories(polynom PUBLIC "include")
 
 
 #Подключение консольного приложения
-add_executable(main "src/main.cpp")
-target_link_libraries(main polynom)
+add_executable(console "console/console.cc")
+target_link_libraries(console polynom)
 
