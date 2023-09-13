@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.11)
+
+project(polynom CXX)
+
+set(CMAKE_CXX_STANDARD 23)
+
+if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS true)
+
+    if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+        string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+    endif()
+endif()
+
+# Объявляем библиотеку
+add_library(polynom SHARED "include/polynom/polynom.h" "src/polynom.cpp")
+target_include_directories(polynom PUBLIC "include")
+
+
+#Подключение консольного приложения
+add_executable(main "src/main.cpp")
+target_link_libraries(main polynom)
+
