@@ -58,3 +58,19 @@ Polynom<T>::Polynom(const Polynom& a) : _data(new T(a._size)), _size(a._size) {
 		_data[i] = a._data[i];
 	}
 }
+
+//template<typename T>
+//ostream& pol:: operator <<(ostream& stream, const Polynom<T>& a) {
+//	for (size_t i = 0; i < _data.size(); ++i) {
+//		if (i == 0) {
+//			stream << _data[i];
+//		}
+//		else if (i == 1) {
+//			stream << " + " << _data[i] << "*x";
+//		}
+//		else {
+//			stream << " + " << _data[i] << "*x^" << i;
+//		}
+//	}
+//	return stream;
+//}
