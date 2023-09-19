@@ -44,7 +44,7 @@ namespace pol {
           }
           void set(T data, size_t index) {
               if (index > _size) {
-                  expand(index);
+                  expand(index+1);
               }
               _data[index] = data;
           }
@@ -90,6 +90,11 @@ namespace pol {
                   _data[i] *= a;
               }
               return *this;
+          }
+          friend Polynom<T> operator* (const T& a, const Polynom<T>& pol) {
+              Polynom<T> res = pol;
+              res = res * a;
+              return res;
           }
           T calculation_polynom_x(const T& x) {
               T sum = 0;
