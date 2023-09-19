@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <stdexcept>
 
 namespace pol {
     template<typename T>
@@ -9,7 +10,11 @@ namespace pol {
          size_t _size;
       public:
           Polynom(size_t size) : _size(size), _data(new T[size]()) {}
-          Polynom(T* data, size_t size) :  _data(data), _size(size) {}
+          Polynom(T* data, size_t size) :  _data(new T[size]), _size(size) {
+              for (size_t i = 0; i < _size; i++) {
+                  _data[i] = data[i];
+              }
+          }
           size_t size() const {
               return _size;
           }
@@ -38,9 +43,15 @@ namespace pol {
               return _data[index];
           }
           void set(T data, size_t index) {
+              if (index > _size) {
+                  expand(index);
+              }
               _data[index] = data;
           }
           void expand(size_t size) {
+              if (size < _size) {
+                  throw std::out_of_range("operator[] Index is out of range.");
+              }
               auto temp = (new T[size]());
               for (size_t i = 0; i < _size; i++) {
                   temp[i] = _data[i];
