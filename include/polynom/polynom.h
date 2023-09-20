@@ -77,6 +77,7 @@ namespace pol {
 
           Polynom<T>& operator+= (const Polynom<T>& a) {
               if (a.size() > _size) {
+
                   expand(a.size());
               }
               for (size_t i = 0; i < a._size; i++) {
@@ -95,9 +96,8 @@ namespace pol {
               return *this;
           }
 
-          Polynom<T> operator- (const Polynom<T>& a) const {
-              Polynom<T> copy(*this);
-              return copy -= a;
+          Polynom<T> operator- (Polynom<T> a) const {
+              return a -= *this;
           }
 
           Polynom<T> operator+ (Polynom<T> a)  const {
@@ -142,8 +142,9 @@ namespace pol {
           }
 
           void shrink_to_fit(){
+              T zero = T(0);
               for (size_t i = _size-1; i > 0; i--) {
-                  if (_data[i] != 0) {
+                  if (_data[i] != zero) {
                       i++;
                       auto temp = (new T[i]());
                       for (size_t j = 0; j < i; j++) {
@@ -164,7 +165,7 @@ namespace pol {
               size_t n = _size + 1;
               auto temp = (new T[n]());
               for (size_t i = 1; i < n; i++) {
-                  temp[i] = float(_data[i - 1]) / (i);
+                  temp[i] = _data[i - 1] / (i);
               }
               delete[] _data;
               _data = temp;
@@ -188,10 +189,10 @@ namespace pol {
 	    return stream;
     }
 
-    template<>
+   /* template<>
     void Polynom<std::complex<float>>::shrink_to_fit() {
         for (size_t i = _size - 1; i > 0; i--) {
-            if (_data[i] != std::complex < float>(0,0)) {
+            if (_data[i] != std::complex <float>(0,0)) {
                 i++;
                 auto temp = (new std::complex<float>[i]());
                 for (size_t j = 0; j < i; j++) {
@@ -203,5 +204,5 @@ namespace pol {
                 break;
             }
         }
-    }
+    }*/
  }
